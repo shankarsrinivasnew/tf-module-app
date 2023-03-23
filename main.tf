@@ -38,8 +38,8 @@ resource "aws_autoscaling_group" "asgr" {
 
   tags = merge(
     var.tags,
-    { Name = "${var.component}-${var.env}" },
-    { propagate_at_lauch = true }
+    { Name = "${each.value["component"]}-${var.env}" },
+    { propagate_at_launch = true }
   )
 
 

@@ -1,5 +1,5 @@
 resource "aws_launch_template" "templater" {
-  name = "${var.env}-${var.component}"
+  name = "${var.env}-${var.component}-template"
 
   /* iam_instance_profile {
     name = "test"
@@ -26,6 +26,7 @@ resource "aws_launch_template" "templater" {
 }
 
 resource "aws_autoscaling_group" "asgr" {
+  name                = "${var.component}-${var.env}-asg"
   vpc_zone_identifier = var.subnets
   desired_capacity    = var.desired_capacity
   max_size            = var.max_size

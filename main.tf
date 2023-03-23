@@ -45,7 +45,7 @@ resource "aws_autoscaling_group" "asgr" {
   tag {
     key                 = "Name"
     value               = "${var.component}-${var.env}"
-    propagate_at_launch = true
+    propagate_at_launch = false
   }
 
 

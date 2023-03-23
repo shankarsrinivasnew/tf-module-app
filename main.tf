@@ -36,11 +36,12 @@ resource "aws_autoscaling_group" "asgr" {
     version = "$Latest"
   }
 
-  tags = merge(
-    var.tags,
-    { Name = "${each.value["component"]}-${var.env}" },
-    { propagate_at_launch = true }
-  )
+  tag {
+    key                 = "Name"
+    value               = "${var.component}-${var.env}"
+    propagate_at_launch = true
+  }
+
 
 
 }

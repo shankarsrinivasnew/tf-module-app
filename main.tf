@@ -11,7 +11,7 @@ resource "aws_autoscaling_group" "asgr" {
   min_size           = var.min_size
 
   launch_template {
-    id      = aws_launch_template.foobar.id
+    id      = aws_launch_template.templater.id
     version = "$Latest"
   }
 }

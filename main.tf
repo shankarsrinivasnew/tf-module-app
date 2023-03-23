@@ -1,5 +1,5 @@
 resource "aws_launch_template" "templater" {
-  name = "${var.dev}-${var.component}"
+  name = "${var.env}-${var.component}"
 
   /* iam_instance_profile {
     name = "test"

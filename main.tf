@@ -1,17 +1,46 @@
 resource "aws_launch_template" "templater" {
-  name_prefix   = "${var.env}-${var.name}-template"
-  image_id      = data.aws_ami.ownami.image_id
+  name = "${var.dev}-${var.component}"
+
+  /* iam_instance_profile {
+    name = "test"
+  } */
+
+  image_id = data.aws_ami.ownami.image_id
+
+  instance_market_options {
+    market_type = "spot"
+  }
+
   instance_type = var.instance_type
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = merge(
+      var.tags,
+      { Name = "${var.component}-${var.env}" }
+    )
+  }
+
+  /* user_data = filebase64("${path.module}/example.sh") */
 }
 
 resource "aws_autoscaling_group" "asgr" {
-  availability_zones = var.availability_zones
-  desired_capacity   = var.desired_capacity
-  max_size           = var.max_size
-  min_size           = var.min_size
+  vpc_zone_identifier = var.subnets
+  desired_capacity    = var.desired_capacity
+  max_size            = var.max_size
+  min_size            = var.min_size
 
   launch_template {
     id      = aws_launch_template.templater.id
     version = "$Latest"
   }
+
+  tags = merge(
+    var.tags,
+    { Name = "${var.component}-${var.env}" },
+    { propagate_at_lauch = true }
+  )
+
+
 }

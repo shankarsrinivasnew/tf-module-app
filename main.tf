@@ -22,7 +22,7 @@ resource "aws_launch_template" "templater" {
     )
   }
 
-  user_data = base64encode(templatefile("user_data.sh", {
+  user_data = base64encode(templatefile("${path.module}/user_data.sh", {
     env       = var.env
     component = var.component
   }))

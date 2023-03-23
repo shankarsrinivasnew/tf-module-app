@@ -22,7 +22,12 @@ resource "aws_launch_template" "templater" {
     )
   }
 
-  /* user_data = filebase64("${path.module}/example.sh") */
+  user_data = base64encode(templatefile("user_data.sh", {
+    env       = var.env
+    component = var.component
+  }))
+
+
 }
 
 resource "aws_autoscaling_group" "asgr" {

@@ -58,6 +58,10 @@ resource "aws_launch_template" "templater" {
 
   vpc_security_group_ids = [aws_security_group.sgr.id]
 
+  iam_instance_profile {
+    name = aws_iam_instance_profile.ssm_profile.name
+  }
+
 
 }
 

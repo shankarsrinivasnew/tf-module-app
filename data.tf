@@ -3,3 +3,5 @@ data "aws_ami" "ownami" {
   name_regex  = "devops-practice-with-ansible"
   owners      = ["self"]
 }
+
+data "aws_caller_identity" "current" {}

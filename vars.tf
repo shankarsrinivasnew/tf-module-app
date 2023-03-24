@@ -24,6 +24,9 @@ variable "max_size" {
 variable "min_size" {
   
 }
-/* variable "vpc_id" {
+variable "vpc_id" {
   
-} */
+}
+variable "bastion_cidr" {
+  
+}

@@ -4,19 +4,19 @@ resource "aws_security_group" "sgr" {
   vpc_id      = var.vpc_id
 
   ingress {
-    description      = "for ssh traffic"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = var.bastion_cidr
+    description = "for ssh traffic"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = var.bastion_cidr
   }
 
   ingress {
-    description      = "for internal application traffic"
-    from_port        = var.port
-    to_port          = var.port
-    protocol         = "tcp"
-    cidr_blocks      = var.allow_app_to
+    description = "for internal application traffic"
+    from_port   = var.port
+    to_port     = var.port
+    protocol    = "tcp"
+    cidr_blocks = var.allow_app_to
   }
 
   egress {
@@ -28,9 +28,9 @@ resource "aws_security_group" "sgr" {
   }
 
   tags = merge(
-      var.tags,
-      { Name = "${var.component}-${var.env}" }
-    )
+    var.tags,
+    { Name = "${var.component}-${var.env}" }
+  )
 }
 
 
@@ -80,6 +80,7 @@ resource "aws_autoscaling_group" "asgr" {
   desired_capacity    = var.desired_capacity
   max_size            = var.max_size
   min_size            = var.min_size
+  target_group_arns   = [aws_lb_target_group.tgr.arn]
 
   launch_template {
     id      = aws_launch_template.templater.id
@@ -91,7 +92,22 @@ resource "aws_autoscaling_group" "asgr" {
     value               = "${var.component}-${var.env}"
     propagate_at_launch = false
   }
+}
 
-
-
+resource "aws_lb_target_group" "tgr" {
+  name     = "${var.component}-${var.env}-tg"
+  port     = var.port
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
+  health_check {
+    enabled             = true
+    healthy_threshold   = 2
+    unhealthy_threshold = 5
+    interval            = 5
+    timeout             = 4
+  }
+  tags = merge(
+    var.tags,
+    { Name = "${var.component}-${var.env}" }
+  )
 }

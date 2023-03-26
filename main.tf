@@ -119,3 +119,20 @@ resource "aws_route53_record" "myr53" {
   ttl     = 30
   records = [var.alb_dns_name]
 }
+
+
+resource "aws_lb_listener_rule" "rule1" {
+  listener_arn = var.listener_arn
+  priority     = var.listener_priority
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tgr.arn
+  }
+
+  condition {
+    host_header {
+      values = [local.dns_name]
+    }
+  }
+}

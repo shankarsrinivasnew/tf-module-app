@@ -6,6 +6,6 @@ data "aws_ami" "ownami" {
 
 data "aws_caller_identity" "current" {}
 
-/* data "aws_route53_zone" "domain" {
+data "aws_route53_zone" "domain" {
   name         = var.dns_domain
-} */
+}

@@ -111,10 +111,11 @@ resource "aws_lb_target_group" "tgr" {
     { Name = "${var.component}-${var.env}" }
   )
 }
-/* 
+
 resource "aws_route53_record" "myr53" {
   zone_id = data.aws_route53_zone.domain.zone_id
   name    = "${var.component}-${var.env}.${var.dns_domain}"
-  type    = "cname"
+  type    = "CNAME"
   ttl     = 30
-  records =  */
+  records = [var.alb_dns_name]
+}

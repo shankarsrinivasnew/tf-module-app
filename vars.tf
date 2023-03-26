@@ -37,6 +37,9 @@ variable "allow_app_to" {
   
 }
 
-/* variable "dns_domain" {
+variable "dns_domain" {
   
-} */
+}
+variable "alb_dns_name" {
+  
+}

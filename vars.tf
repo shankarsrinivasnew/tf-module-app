@@ -36,3 +36,7 @@ variable "port" {
 variable "allow_app_to" {
   
 }
+
+/* variable "dns_domain" {
+  
+} */

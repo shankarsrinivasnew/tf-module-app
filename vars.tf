@@ -50,3 +50,6 @@ variable "listener_arn" {
 variable "listener_priority" {
   
 }
+variable "ssm_parameters" {
+  
+}

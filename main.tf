@@ -92,10 +92,10 @@ resource "aws_autoscaling_group" "asgr" {
 }
 
 resource "aws_lb_target_group" "tgr" {
-  name          = "${var.component}-${var.env}-tg"
-  port_internal = var.port_internal
-  protocol      = "HTTP"
-  vpc_id        = var.vpc_id
+  name     = "${var.component}-${var.env}-tg"
+  port     = var.port_internal
+  protocol = "HTTP"
+  vpc_id   = var.vpc_id
   health_check {
     enabled             = true
     healthy_threshold   = 2

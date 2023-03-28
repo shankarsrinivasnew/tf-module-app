@@ -17,8 +17,8 @@ resource "aws_iam_policy" "ssm_policy" {
           "ssm:GetParameters",
           "ssm:GetParameter"
         ],
-        "Resource" : "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/${var.env}.${var.component}*"
-        "Resource" : "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/${var.env}.docdb*",
+        "Resource" : "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/${var.env}.${var.component}*",
+        "Resource" : "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/${var.env}.docdb*"
       },
       {
         "Sid" : "VisualEditor1",

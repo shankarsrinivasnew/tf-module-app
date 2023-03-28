@@ -30,10 +30,10 @@ variable "vpc_id" {
 variable "bastion_cidr" {
   
 }
-variable "port" {
+variable "port_internal" {
   
 }
-variable "allow_app_to" {
+variable "allow_app_to_subnet" {
   
 }
 

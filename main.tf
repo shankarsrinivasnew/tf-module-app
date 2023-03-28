@@ -13,10 +13,10 @@ resource "aws_security_group" "sgr" {
 
   ingress {
     description = "for internal application traffic"
-    from_port   = var.port
-    to_port     = var.port
+    from_port   = var.port_internal
+    to_port     = var.port_internal
     protocol    = "tcp"
-    cidr_blocks = var.allow_app_to
+    cidr_blocks = var.allow_app_to_subnet
   }
 
   egress {
@@ -38,9 +38,6 @@ resource "aws_security_group" "sgr" {
 resource "aws_launch_template" "templater" {
   name = "${var.env}-${var.component}-template"
 
-  /* iam_instance_profile {
-    name = "test"
-  } */
 
   image_id = data.aws_ami.ownami.image_id
 
@@ -95,10 +92,10 @@ resource "aws_autoscaling_group" "asgr" {
 }
 
 resource "aws_lb_target_group" "tgr" {
-  name     = "${var.component}-${var.env}-tg"
-  port     = var.port
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  name          = "${var.component}-${var.env}-tg"
+  port_internal = var.port_internal
+  protocol      = "HTTP"
+  vpc_id        = var.vpc_id
   health_check {
     enabled             = true
     healthy_threshold   = 2

@@ -11,6 +11,15 @@ resource "aws_security_group" "sgr" {
     cidr_blocks = var.bastion_cidr
   }
 
+
+  ingress {
+    description = "for prometheus traffic"
+    from_port   = 9100
+    to_port     = 9100
+    protocol    = "tcp"
+    cidr_blocks = var.prometheus_cidr
+  }
+
   ingress {
     description = "for internal application traffic"
     from_port   = var.port_internal
@@ -18,6 +27,7 @@ resource "aws_security_group" "sgr" {
     protocol    = "tcp"
     cidr_blocks = var.allow_app_to_subnet
   }
+
 
   egress {
     from_port        = 0
@@ -52,7 +62,7 @@ resource "aws_launch_template" "templater" {
 
     tags = merge(
       var.tags,
-      { Name = "${var.component}-${var.env}" }
+      { Name = "${var.component}-${var.env}", Monitor = "yes" }
     )
   }
 
@@ -102,6 +112,7 @@ resource "aws_lb_target_group" "tgr" {
     unhealthy_threshold = 5
     interval            = 5
     timeout             = 4
+    path                = "/health"
   }
   tags = merge(
     var.tags,

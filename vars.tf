@@ -53,3 +53,6 @@ variable "listener_priority" {
 variable "ssm_parameters" {
   
 }
+variable "prometheus_cidr" {
+  
+}

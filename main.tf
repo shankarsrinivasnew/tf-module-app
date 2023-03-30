@@ -144,3 +144,17 @@ resource "aws_lb_listener_rule" "rule1" {
     }
   }
 }
+
+
+resource "aws_autoscaling_policy" "asgpolicy" {
+  name        = "cpu-util-tracking"
+  policy_type = "TargetTrackingScaling"
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 30.0
+  }
+  autoscaling_group_name = aws_autoscaling_group.asgr.name
+}

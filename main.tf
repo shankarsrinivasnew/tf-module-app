@@ -102,10 +102,11 @@ resource "aws_autoscaling_group" "asgr" {
 }
 
 resource "aws_lb_target_group" "tgr" {
-  name     = "${var.component}-${var.env}-tg"
-  port     = var.port_internal
-  protocol = "HTTP"
-  vpc_id   = var.vpc_id
+  name                 = "${var.component}-${var.env}-tg"
+  port                 = var.port_internal
+  protocol             = "HTTP"
+  vpc_id               = var.vpc_id
+  deregistration_delay = 30
   health_check {
     enabled             = true
     healthy_threshold   = 2
@@ -154,7 +155,7 @@ resource "aws_autoscaling_policy" "asgpolicy" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
-    target_value = 30.0
+    target_value = 20.0
   }
   autoscaling_group_name = aws_autoscaling_group.asgr.name
 }

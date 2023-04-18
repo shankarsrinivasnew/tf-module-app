@@ -66,6 +66,15 @@ resource "aws_launch_template" "templater" {
     )
   }
 
+    tag_specifications {
+    resource_type = "spot-request-instance"
+
+    tags = merge(
+      var.tags,
+      { Name = "${var.component}-${var.env}", Monitor = "yes" }
+    )
+  }
+
   user_data = base64encode(templatefile("${path.module}/userdata.sh", {
     env       = var.env
     component = var.component

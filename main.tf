@@ -67,7 +67,7 @@ resource "aws_launch_template" "templater" {
   }
 
     tag_specifications {
-    resource_type = "spot-request-instance"
+    resource_type = "spot-instances-request"
 
     tags = merge(
       var.tags,
